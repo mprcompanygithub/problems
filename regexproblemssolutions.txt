@@ -1,0 +1,327 @@
+Congrats Masky Boiii You just solved all the Character Class challenges in Regex! 
+
+f & r difference
+
+
+"^.{3}\\..{3}\\..{3}\\..{3}$"	
+"^(.{3}\\.){3}.{3}$"
+
+Matching Digits & Non-Digit Characters ==> ^(\d{2}\D){2}\d{4,}$
+Matching Whitespace & Non-Whitespace Character ==> ^(\S{2,}\s){2}\S{2,}$ ==> ^\S{2,}\s\S{2}\s\S{2,}$
+Matching Word & Non-Word Character ==> ^\w{3,}\W{1,}\w{3,}\W{1,}\w{3}$ ==> ^\w{3,}\W{1,}\w{3,}\W{1,}\w{3}
+Matching Start & End ==> ^\d\w{0,4}\.$
+Excluding Specific Characters ==> ^\D[^aeiou][^bcDF]\S[^AEIOU][^.,]$
+Matching Character Ranges ==> ^[a-z][1-9][^a-z][^A-Z][A-Z]
+
+def is_valid_pan(pan):
+    pattern = r"^[A-Z]{5}[0-9]{4}[A-Z]{1}$"
+    return bool(re.fullmatch(pattern, pan))
+    
+Valid PAN format : 
+n=int(input())
+l=[]
+for i in range(n):
+    pan=input()
+    l.append(pan)
+
+for i in range(n):
+    if(is_valid_pan(l[i])):
+        print("YES")
+    else:
+        print("NO")
+============================
+import re
+def find_hackerrank(hackerrank):
+    if(bool(re.search( r"^hackerrank$", hackerrank))):
+        return "0"
+    elif (bool(re.search( r"^hackerrank", hackerrank))):
+        return "1"
+    elif (bool(re.search( r"hackerrank$", hackerrank))):
+        return "2"
+    else : 
+        return "-1"
+        
+    
+    
+n=int(input())
+l=[]
+for i in range(n):
+    pan=input()
+    l.append(pan)
+    
+for i in range(n):
+    print(find_hackerrank(l[i]))
+
+============================
+
+import re
+
+n=int(input())
+l=[]
+for i in range(n):
+    pan=input()
+    l.append(pan)
+
+pattern=r"^[hH][Ii]\s[^Dd]"
+
+for i in l:
+    if(bool(re.match(pattern, i))):
+        print(i)
+
+============================
+
+Some language problem :
+
+import re
+
+pattern =r'\b(C|CPP|JAVA|PYTHON|PERL|PHP|RUBY|CSHARP|HASKELL|CLOJURE|BASH|SCALA|ERLANG|CLISP|LUA|BRAINFUCK|JAVASCRIPT|GO|D|OCAML|R|PASCAL|SBCL|DART|GROOVY|OBJECTIVEC)\b'
+
+
+n=int(input())
+l=[]
+for i in range(n):
+    pan=input()
+    lang=pan.split(" ")
+    lang=lang[1]
+    l.append(lang)
+for i in l:
+    if bool(re.search(pattern,i)):
+        print("VALID")
+    else:
+        print("INVALID")
+===================================
+
+Matching {x} Repetitions : ^[a-zA-Z|02468]{40}[13579|\s]{5}$
+
+Matching {x, y} Repetitions : ^\d{1,2}[a-zA-Z]{3,}\.{0,3}$
+
+Matching Zero Or More Repetitions : ^\d{2,}[a-z]{0,}[A-Z]{0,}$
+
+Matching One Or More Repetitions : ^\d{1,}[A-Z]{1,}[a-z]{1,}$
+
+Matching Ending Items : ^[a-zA-Z]{0,}s$
+
+Positive Lookbehind : (?<=[13579])[0-9]
+
+Negative Lookbehind : (?<![aeiouAEIOU])(.)
+
+Matching Word Boundaries : \b[AEIOUaeiou][a-zA-Z]{0,}\b
+
+Capturing & Non-Capturing Groups : (ok){3,}
+
+Alternative Matching : ^(Mr\.|Mrs\.|Ms\.|Dr\.|Er\.)[a-zA-Z]{1,}$
+
+Find A Sub-Word : 
+
+import re
+n = " ".join([(input()) for _ in range(int(input()))])
+
+for _ in range(int(input())):
+    print(len(re.findall(rf"\w{input()}\w", n)))
+
+Matching Same Text Again & Again : ([a-z]\w\s\W\d\D[A-Z][a-zA-Z][aeiouAEIOU]\S)\1 ==> use of \1 for palindrome sequence
+
+Backreferences To Failed Groups : ^((\d{2}-){3}\d{2})$|(\d{8}) ==> ? (optional character)
+
+Branch Reset Groups : "^\d{2}(-|---|\.|:)(\d{2}\1?){3}$" ==? \1 (first capturing group)
+
+Forward References : ^tac((tac)+\2|tac(tic))+$ 	==> \2 (second capturing group)
+
+Negative Lookahead : (.)(?!\1) ==> \1 (first capturing group) ==> foo(?!bar) ==> ex : != foobar , foo bar
+
+Utopian Identification Number : ^[a-z]{0,3}\d{2,8}[A-Z]{3,}$
+
+Building a Smart IDE: Programming Language Detection : import re
+import sys
+
+n = sys.stdin.read()
+
+if re.search("#include<stdio.h>", n) is not None:
+    print("C")
+elif re.search("import java.io", n) is not None:
+    print("Java")
+else:
+    print("Python")
+
+Split the Phone Numbers : import re
+n=int(input())
+l=[]
+for i in range(n):
+    pan=input()
+    l.append(pan)
+for i in l:
+    s=re.split(r'\s|[-]', i)
+    print(f"CountryCode={s[0]},LocalAreaCode={s[1]},Number={s[2]}")
+
+=========================================================================
+
+Detect HTML Attributes : import re
+import sys
+n = int(input())
+html = sys.stdin.read()
+pattern_tag = r'<(\w+)([^>]*)'
+matches = re.findall(pattern_tag, html)
+# print(matches)
+dict_tag = {}
+for match in matches:
+    pattern_attribute = r'\s(\w+)='
+    atts = re.findall(pattern_attribute, match[1])
+    if match[0] in dict_tag:
+        dict_tag[match[0]].update(atts)
+    else:
+        dict_tag[match[0]] = set(atts)
+dict_tag = dict(sorted(dict_tag.items()))
+for k, v in dict_tag.items():
+    print(k,":", sep="", end="")
+    atts = sorted(list(v))
+    print(",".join(atts))
+
+Positive Lookahead : o(?=oo)
+
+Comments : print("\n".join(re.findall(r"//.*|/\*[\S\s]*?\*/", "\n".join([i.strip() for i in sys.stdin]))))
+
+Detecting Valid Latitude and Longitude Pairs : import re
+n = int(input())
+lines = [input() for _ in range(n)]
+
+regex = r"^\(([+-]?(?!0)\d+(?:\.\d+)?),\s([+-]?(?!0)\d+(?:\.\d+)?)\)?$"
+
+for line in lines:
+    match = re.match(regex, line)
+    if match:
+        lng = float(match.group(1))
+        lat = float(match.group(2))
+        
+        if (-90 <= lng <= 90) and (-180 <= lat <= 180):
+            print("Valid")
+        else:
+            print("Invalid")
+    else:
+        print("Invalid")
+
+HackerRank Tweets : import re
+import sys
+n = int(input())
+html = sys.stdin.read()
+pattern_tag = r'hackerrank'
+# pattern_tag = r'(H|h)(A|a)(C|c)'
+matches = re.findall(pattern_tag, html.lower())
+# print(matches)
+print(len(matches))
+
+UK and US: Part 2 ==> s = " ".join([input() for _ in range(int(input()))]).split()
+
+for _ in range(int(input())):
+    i = input()
+    print(s.count(i) + s.count(i.replace("our", "or")))
+
+Alien Username : import re
+n=int(input())
+l=[]
+for i in range(n):
+    pan=input()
+    l.append(pan)
+pattern=r'^(_|\.)\d+[a-zA-Z]{0,}(_)?$'
+for i in l:
+    if bool(re.search(pattern,i)):
+        print("VALID")
+    else:
+        print("INVALID")
+
+IP Address Validation : 
+import re
+n=int(input())
+l=[]
+for i in range(n):
+    pan=input()
+    l.append(pan)
+for i in l:
+    if bool(re.search(r'^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$',i)):
+        print("IPv4")
+    elif bool(re.search(r'^([0-9a-fA-F]{1,4}:){7}[0-9a-fA-F]{1,4}$|^([0-9a-fA-F]{1,4}:){0,6}(:([0-9a-fA-F]{1,4}:){1,6}){0,1}$',i)):
+        print("IPv6")
+    else:
+        print("Neither")
+
+Find a Word : import re
+sentence = '\n'.join([input() for _ in range(int(input()))])
+for _ in range(int(input())):
+    print(len(re.findall(f'\\b({input()})\\b', sentence)))
+
+Detect HTML links : import re
+import sys
+n = int(input())
+html = sys.stdin.read()
+pattern = r'<a\s.*?href="(.*?)".*?>\s*([^<>]*?)</'
+matches = re.findall(pattern, html)
+# print(matches)
+for match in matches:
+    print(match[0], match[1], sep=",")
+
+Detect HTML Tags : import re
+l=[input() for _ in range(int(input()))]
+pattern=r'(?<=\<)\w+'
+s=set({})
+for i in l:
+    a=re.findall(pattern,i)
+    for j in a:s.add(j)
+    g=sorted(s)
+aa=';'.join(i for i in g)
+print(aa)
+
+Detect the Email Addresses : import re
+l=[input() for _ in range(int(input()))]
+pattern=r'([\w\.]+@\w+[\.\w+]+[a-zA-Z]{2,})'
+s=set({})
+for i in l:
+    a=re.findall(pattern,i)
+    # print(a)
+    for j in a:s.add(j)
+    g=sorted(s)
+aa=';'.join(i for i in g)
+print(aa)
+
+Detect the Domain Name : import re, sys
+n = int(input())
+html = sys.stdin.read()
+pattern = r'https?://(www\.|ww2\.)?([a-z0-9\-]+\.[\.a-z0-9\-]+)'
+
+matches = re.findall(pattern, html)
+st = set()
+for match in matches:
+    st.add(match[1])
+print(";".join(sorted(list(st))))
+
+Build a Stack Exchange Scraper : import sys, re
+
+inp = sys.stdin.read()
+i = re.findall(r'id="question-summary-(\d+)"', inp)
+q = re.findall(r'class="question-hyperlink">([^<]+)', inp)
+t = re.findall(r'class="relativetime">([^<]+)', inp)
+[print(*x, sep=';') for x in zip(i, q, t)]
+
+The British and American Style of Spelling : import re
+ls=[input() for _ in range(int(input()))]
+ls1=[input() for _ in range(int(input()))]
+for i in ls1:
+    l=[]
+    word=i[:-2]
+    for j in ls:
+        pattern=rf'({word}[z|s](?=e))'
+        matches=re.findall(pattern,j)
+        for i1 in matches:
+            l.append(i1)
+    print(len(l))
+
+
+
+
+
+
+
+
+
+
+
+
+
